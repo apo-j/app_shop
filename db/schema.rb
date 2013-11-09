@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131106193118) do
+ActiveRecord::Schema.define(version: 20131109123141) do
 
   create_table "app_data", primary_key: "guid", force: true do |t|
     t.integer  "obj_id"
@@ -255,6 +255,7 @@ ActiveRecord::Schema.define(version: 20131106193118) do
     t.datetime "updated_at"
   end
 
+  add_index "meta_data", ["org_id", "obj_name"], name: "by_org_name", unique: true, using: :btree
   add_index "meta_data", ["org_id"], name: "by_org", using: :btree
 
   create_table "meta_data_fields", primary_key: "field_id", force: true do |t|
