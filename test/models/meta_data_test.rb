@@ -7,17 +7,18 @@ class MetaDataTest < ActiveSupport::TestCase
   # end
   test "org and name should not null" do
       obj = MetaData.new
-      assert obj.invalid?
-      assert obj.errors[:org_id].any?
-      assert obj.errors[:obj_name].any?
+      errors = MetaData.get_errors(obj)
+      assert errors[:org_id].any?
+      assert errors[:obj_name].any?
   end
 
   test "obj name should be unique in org" do
     obj = MetaData.new(org_id: meta_data(:one).org_id,
                        obj_name: meta_data(:one).obj_name,
                        is_active: true)
-    assert obj.invalid?
-    assert obj.errors[:obj_name].any?
+    errors = MetaData.get_errors(obj)
+    assert errors[:obj_name].any?
+    puts errors.to_json
   end
 
 
