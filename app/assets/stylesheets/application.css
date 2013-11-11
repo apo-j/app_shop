@@ -9,5 +9,10 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+ *
+ * To ensure the order the loading files, all other stylesheets should be added here
+ * before the next line
+ *
+ *= require site
  *= require_tree .
  */
