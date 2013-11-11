@@ -19,5 +19,14 @@ module AppShop
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+
+    # stop rails from generating any assets files while generating controllers
+    config.generators do |g|
+      g.assets false
+    end
+
+    #add bootstrap to asset pipeline
+    config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
+
   end
 end
