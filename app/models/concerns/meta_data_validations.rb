@@ -15,6 +15,15 @@ module MetaDataValidations
         return false
       end
      end
+
+    def get_errors(obj)
+      if obj.invalid?
+        obj.errors.add(ErrorMSG::Model::RESPONSE, ErrorMSG::Model::MSG[:KO])
+      else
+        obj.errors.add(ErrorMSG::Model::RESPONSE, ErrorMSG::Model::MSG[:OK])
+      end
+      return obj.errors
+    end
   end
 
 end
