@@ -3,27 +3,17 @@ module MetaDataQuery
   extend ActiveSupport::Concern
 
   included do
+    scope :active,             ->{where("is_active > 0")}
+    scope :include_fields,     ->{includes(:fields)}
+    scope :include_instances,  ->{includes(:instances)}
+    scope :by_name,            ->(org,name){where("org_id = ? and obj_name = ?",org,name)}
+    scope :by_id,              ->(id){find(id)}
+    scope :by_org,             ->(org){where("org_id = ?",org)}
+    scope :all_system_objs,    ->{by_org(Org::SYS)}
   end
 
 
   module ClassMethods
-    def get_active_obj(sql, *value)
-      begin_sql = 'is_active > 0'
-      if !sql.blank?
-        begin_sql << ' and ('+sql+')'
-      end
-      where(begin_sql, *value)
-    end
-
-    def get_active_obj_by_name(org, name)
-      sql = 'org_id = ? and obj_name = ?'
-      get_active_obj(sql, org, name).first
-    end
-
-    def get_active_obj_by_id(id)
-      sql = 'obj_id = ?'
-      get_active_obj(sql, id).first
-    end
   end
 
 end

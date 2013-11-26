@@ -6,7 +6,8 @@ module ErrorMSG #error message
             OK: '200',
             KO: '400',
             p: '1000',
-            uq: '1001'
+            uq: '1001',
+            idx: '1010'
         }
   end
 end
@@ -67,4 +68,8 @@ module FieldValue      #meta_data_field conf
   end
 
 
+end
+
+module Org
+  SYS = 0
 end
