@@ -3,7 +3,7 @@ module RelationshipAssociation
   extend ActiveSupport::Concern
 
   included do
-    belongs_to :instance, class_name: "AppData", foreign_key: "instance_id",
+    belongs_to :instance, class_name: "AppData", foreign_key: "instance_id"
   end
 
   module ClassMethods
