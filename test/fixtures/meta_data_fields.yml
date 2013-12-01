@@ -4,8 +4,21 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
+f1:
+  obj: one
+  org_id: 100
+  field_name: field1
+  field_num: 1
+  field_type: 1
+  is_indexed: true
+  is_unique: true
 # column: value
-#
-two: {}
+f2:
+  obj: one
+  org_id: 100
+  field_name: field2
+  field_num: 2
+  field_type: 1
+  is_indexed: true
+  is_unique: true
 #  column: value

@@ -5,6 +5,8 @@ module MetaDataFieldValidations
     validates :org_id, :field_name, :field_type, :field_num, :is_indexed, presence: {message: ErrorMSG::Model::MSG[:p]}
     validates :field_name, uniqueness: {scope: :obj, message: ErrorMSG::Model::MSG[:uq]}
     validates :field_num, uniqueness: {scope: :obj, message: ErrorMSG::Model::MSG[:uq]}
+    validates :field_name, length: {in:3..100}, presence: {message: ErrorMSG::Model::MSG[:len]}
+    validates :field_name, format: {with: /\A[a-zA-Z0-9]+\z/, message: ErrorMSG::Model::MSG[:reg]}
     validates_with IndexValidator, if: :is_indexed
   end
 

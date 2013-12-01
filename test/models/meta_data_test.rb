@@ -45,4 +45,14 @@ class MetaDataTest < ActiveSupport::TestCase
     assert MetaData.active.by_org(meta_data(:one).org_id).any?
   end
 
+  test "load fields" do
+    obj = MetaData.active.by_id(meta_data(:one).obj_id)
+    assert_not_nil obj
+    puts obj.to_json
+    assert obj.fields.any?
+    obj = MetaData.include_fields.active.by_id(meta_data(:one).obj_id)
+    assert obj.fields.any?
+    puts obj.fields.to_json
+  end
+
 end

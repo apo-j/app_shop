@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131112204057) do
+ActiveRecord::Schema.define(version: 20131201111744) do
 
   create_table "app_data", primary_key: "guid", force: true do |t|
     t.integer  "obj_id"
@@ -223,6 +223,7 @@ ActiveRecord::Schema.define(version: 20131112204057) do
   end
 
   add_index "app_data", ["obj_id"], name: "fk_data_obj", using: :btree
+  add_index "app_data", ["org_id", "nature_name"], name: "by_org_nature_name", using: :btree
   add_index "app_data", ["org_id"], name: "by_org", using: :btree
 
   create_table "index_values", force: true do |t|

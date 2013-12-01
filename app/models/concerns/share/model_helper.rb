@@ -3,7 +3,12 @@ module Share::ModelHelper
   extend ActiveSupport::Concern
 
   included do
-    scope :page,->(page,n){offset(([page.to_i,1].max - 1)*([n.to_i,0].max)).limit([n.to_i,0].max)}
+    scope :page,      ->(page,n){offset(([page.to_i,1].max - 1)*([n.to_i,1].max)).limit([n.to_i,1].max)}
+    scope :order_by,  ->(fields){order(fields.joins(','))} do
+      def reverse
+        reverse_order
+      end
+    end
 
     def self.total_page(n)
       c = except(:offset, :limit, :order, :include)
