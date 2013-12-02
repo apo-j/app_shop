@@ -1,0 +1,20 @@
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+      </button>
+      <a href="/" class="navbar-brand" data-bind="text:module.navBar.title"></a>
+    </div>
+    <nav class="collapse navbar-collapse ">
+      <ul id="navbar" class="nav navbar-nav"  data-bind="foreach:module.navBar.items">
+        <li data-bind="css:{'active':isActive()}, cVisible:on()">
+          <a href="javascript:void(0)" data-bind="translate:title, attr:attr,cVisible:on(), dataAttr:dataAttr, click:$data.onClick"></a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

@@ -10,7 +10,21 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
-//= require jquery_ujs
+//=require javascript-extensions
+//= require jquery-1.10.2.min
 //= require bootstrap
+//= require knockout-3.0.0
+//= require knockout.mapping
+//= require knockout-extensions
+//= require Namespace
+//= require jquery.cookie
+//= require global
+//= require static
+//= require enums
+//= require utilities
+//= require vars
+//= require storage
+//= require resources
+//= require translator
+
 //= require_tree .
