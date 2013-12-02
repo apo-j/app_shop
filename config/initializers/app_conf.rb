@@ -83,4 +83,8 @@ module SYS
 
   class FieldNotValid < StandardError
   end
+
+  class RelationNotValid < StandardError
+  end
+
 end
