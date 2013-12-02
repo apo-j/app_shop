@@ -80,11 +80,8 @@ module SYS
   DEFAULT_SIZE = 20
 end
 
-module AppShopError
-  class ObjNotValid < StandardError
-  end
+class ObjNotValid < StandardError
+end
 
-  class FieldNotValid < StandardError
-  end
-
+class FieldNotValid < StandardError
 end

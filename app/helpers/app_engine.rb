@@ -2,6 +2,7 @@ module APPEngine
   module DataSearch
 
     def search_app_data_by_obj_name(obj_name, org = Org::SYS, size = SYS::DEFAULT_SIZE, page = 1, order_by = [%w(guid)], reversed = false)
+      options={}
       options[:org] = org
       options[:obj_name] = obj_name
       options[:page] = page
@@ -12,6 +13,7 @@ module APPEngine
     end
 
     def search_app_data_by_obj_id(obj_id, org = Org::SYS, size = SYS::DEFAULT_SIZE, page = 1, order_by = [%w(guid)], reversed = false)
+      options={}
       options[:org] = org
       options[:obj_id] = obj_id
       options[:page] = page
@@ -67,9 +69,9 @@ module APPEngine
           when ARGUMENT_ERROR
             raise  ArgumentError, %w(arguments are not valid)
           when OBJ_NOT_FOUND
-            raise AppShopError::ObjNotValid, %w(obj is not existed)
+            raise OBJ_NOT_FOUND, %w(obj is not existed)
           when FIELD_NOT_FOUND
-            raise AppShopError::FieldNotValid, %w(field is not existed)
+            raise FIELD_NOT_FOUND, %w(field is not existed)
           when NORMAL
             sql = generate_sql
             if options[:size].to_i == 0
