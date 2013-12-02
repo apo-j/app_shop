@@ -6,7 +6,10 @@ module ErrorMSG #error message
             OK: '200',
             KO: '400',
             p: '1000',
-            uq: '1001'
+            uq: '1001',
+            idx: '1010',
+            len: '1020',
+            reg: '1030'
         }
   end
 end
@@ -66,5 +69,22 @@ module FieldValue      #meta_data_field conf
     end
   end
 
+
+end
+
+module Org
+  SYS = 0
+end
+
+module SYS
+  DEFAULT_SIZE = 20
+end
+
+module AppShopError
+  class ObjNotValid < StandardError
+  end
+
+  class FieldNotValid < StandardError
+  end
 
 end

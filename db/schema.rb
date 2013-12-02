@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131109123141) do
+ActiveRecord::Schema.define(version: 20131201111744) do
 
   create_table "app_data", primary_key: "guid", force: true do |t|
     t.integer  "obj_id"
@@ -223,6 +223,7 @@ ActiveRecord::Schema.define(version: 20131109123141) do
   end
 
   add_index "app_data", ["obj_id"], name: "fk_data_obj", using: :btree
+  add_index "app_data", ["org_id", "nature_name"], name: "by_org_nature_name", using: :btree
   add_index "app_data", ["org_id"], name: "by_org", using: :btree
 
   create_table "index_values", force: true do |t|
@@ -271,7 +272,8 @@ ActiveRecord::Schema.define(version: 20131109123141) do
     t.boolean  "is_unique",    default: false, null: false
   end
 
-  add_index "meta_data_fields", ["obj_id"], name: "fk_field_obj", using: :btree
+  add_index "meta_data_fields", ["obj_id", "field_name"], name: "by_obj_field", unique: true, using: :btree
+  add_index "meta_data_fields", ["obj_id", "field_num"], name: "by_obj_num", unique: true, using: :btree
   add_index "meta_data_fields", ["org_id"], name: "by_org", using: :btree
 
   create_table "name_denorms", force: true do |t|

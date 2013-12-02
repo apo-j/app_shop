@@ -29,17 +29,30 @@ class MetaDataTest < ActiveSupport::TestCase
   end
 
   test "find obj by name" do
-    obj = MetaData.get_active_obj_by_name(meta_data(:one).org_id, meta_data(:one).obj_name)
-    assert_not_nil obj
-
-    obj = MetaData.get_active_obj_by_name(meta_data(:two).org_id, meta_data(:two).obj_name)
-    assert_nil obj
+    assert MetaData.active.by_name(meta_data(:one).org_id, meta_data(:one).obj_name).any?
+    assert MetaData.active.by_name(meta_data(:two).org_id, meta_data(:two).obj_name).empty?
   end
 
   test "find obj by id" do
     obj = MetaData.new(org_id: 200, obj_name: 'test', is_active:true)
     assert obj.save
-    assert_not_nil MetaData.get_active_obj_by_id(obj.obj_id)
+    obj = MetaData.active.by_id(obj.obj_id)
+    puts obj.to_json
+    assert_not_nil obj
+  end
+
+  test "find obj by org" do
+    assert MetaData.active.by_org(meta_data(:one).org_id).any?
+  end
+
+  test "load fields" do
+    obj = MetaData.active.by_id(meta_data(:one).obj_id)
+    assert_not_nil obj
+    puts obj.to_json
+    assert obj.fields.any?
+    obj = MetaData.include_fields.active.by_id(meta_data(:one).obj_id)
+    assert obj.fields.any?
+    puts obj.fields.to_json
   end
 
 end
