@@ -25,6 +25,21 @@ module APPEngine
       return search_app_data_by_obj(options)
     end
 
+    def search_child_app_data_id_by_relation(instance_id, org = Org::SYS)
+      relations = Relationship.select_relationship_p_2_c.by_org_data(org,instance_id)
+      if relations.nil? or relations.empty?
+        raise SYS::RelationNotValid, 'relation is not existed'
+      end
+      r = []
+      ids = []
+      relations.each do |relation|
+        r[0] = relation.target_obj_id
+        ids << relation.relation_id
+      end
+      r[1] = ids
+      return r
+    end
+
     private
       ARGUMENT_ERROR = 0
       OBJ_NOT_FOUND = 1
