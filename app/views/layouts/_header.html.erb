@@ -12,7 +12,7 @@
     <nav class="collapse navbar-collapse ">
       <ul id="navbar" class="nav navbar-nav"  data-bind="foreach:navBar">
         <li>
-          <a href="javascript:void(0)" data-bind="text:obj.code"></a>
+          <a data-bind="link:obj.code"></a>
           <ul class="hide sub-menu non-style" data-bind="foreach:children">
             <li>
               <ul class="sub-menu-item non-style">

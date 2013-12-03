@@ -16,7 +16,6 @@ module ApplicationHelper
         item[:children] = []
       end
       response[:data] << item
-      tt = 'dd'
      end
     # response[:obj][:children] = search_child_app_data_id_by_relation(response[:obj].guid, org_id)
      response[:status] = 'OK'

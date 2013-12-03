@@ -2,7 +2,7 @@
 @import "variables";
 
 #main{
-  margin-top: 50px;
+  margin-top: 60px;
 }
 
 ul.non-style{
@@ -12,10 +12,12 @@ ul.non-style{
 #navbar{
   position:relative;
   .sub-menu{
+    z-index: 99;
     position:absolute;
     width:800px;
     padding-left:0;
     >li{
+      background-color: #fff;
       width:250px;
       height:auto;
       float:left;

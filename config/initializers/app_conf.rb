@@ -24,17 +24,18 @@ module FieldValue      #meta_data_field conf
     STRING = 1
     INT = 2
     DOUBLE = 3
-    PLAIN_TEXT = 4
-    JSON = 5
-    XML = 6
-    IMAGE = 7
-    VIDEO = 8
-    RADIO = 9
-    CSS = 10
-    HTML = 11
-    URL = 12
-    COMPOSITE = 13
-    OTHER = 14
+    BOOLEAN = 4
+    PLAIN_TEXT = 5
+    JSON = 6
+    XML = 7
+    IMAGE = 8
+    VIDEO = 9
+    RADIO = 10
+    CSS = 11
+    HTML = 12
+    URL = 13
+    COMPOSITE = 14
+    OTHER = 15
   end
 
   def self.is_can_be_indexed(field)
