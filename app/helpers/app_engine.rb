@@ -67,11 +67,11 @@ module APPEngine
       def search_app_data_by_obj(options)
         case verify_search_arguments(options)
           when ARGUMENT_ERROR
-            raise  ArgumentError, %w(arguments are not valid)
+            raise  ArgumentError, 'arguments are not valid'
           when OBJ_NOT_FOUND
-            raise OBJ_NOT_FOUND, %w(obj is not existed)
+            raise SYS::ObjNotValid, 'obj is not existed'
           when FIELD_NOT_FOUND
-            raise FIELD_NOT_FOUND, %w(field is not existed)
+            raise SYS::FieldNotValid, 'field is not existed'
           when NORMAL
             sql = generate_sql
             if options[:size].to_i == 0

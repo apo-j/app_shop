@@ -78,10 +78,9 @@ end
 
 module SYS
   DEFAULT_SIZE = 20
-end
+  class ObjNotValid < StandardError
+  end
 
-class ObjNotValid < StandardError
-end
-
-class FieldNotValid < StandardError
+  class FieldNotValid < StandardError
+  end
 end
