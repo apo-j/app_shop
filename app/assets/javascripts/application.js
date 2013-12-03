@@ -27,4 +27,5 @@
 //= require resources
 //= require translator
 
+//= require page-vm
 //= require_tree .
