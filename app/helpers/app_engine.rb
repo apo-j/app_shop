@@ -1,24 +1,24 @@
 module APPEngine
   module DataSearch
 
-    def search_app_data_by_obj_name(obj_name, org = Org::SYS, size = SYS::DEFAULT_SIZE, page = 1, order_by = [%w(guid)], reversed = false)
+    def search_app_data_by_obj_name(obj_name, org = Org::SYS, size = nil, page = nil, order_by = nil, reversed = false)
       options={}
       options[:org] = org
       options[:obj_name] = obj_name
-      options[:page] = page
-      options[:size] = size
-      options[:order_by] = order_by
+      options[:page] = page || 1
+      options[:size] = size || SYS::DEFAULT_SIZE
+      options[:order_by] = order_by || %w(guid)
       options[:reversed] = reversed
       return search_app_data_by_obj(options)
     end
 
-    def search_app_data_by_obj_id(obj_id, org = Org::SYS, size = SYS::DEFAULT_SIZE, page = 1, order_by = [%w(guid)], reversed = false)
+    def search_app_data_by_obj_id(obj_id, org = Org::SYS, size = nil, page = nil, order_by = nil, reversed = false)
       options={}
       options[:org] = org
       options[:obj_id] = obj_id
-      options[:page] = page
-      options[:size] = size
-      options[:order_by] = order_by
+      options[:page] = page || 1
+      options[:size] = size || SYS::DEFAULT_SIZE
+      options[:order_by] = order_by || %w(guid)
       options[:reversed] = reversed
       return search_app_data_by_obj(options)
     end
@@ -33,7 +33,7 @@ module APPEngine
         sql = 'guid'
         @fields.each do |field|
           sql << ',v'
-          sql << field.num
+          sql << field.num.to_s
           sql << ' as '
           sql << field.name
         end

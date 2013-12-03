@@ -4,7 +4,7 @@ module Share::ModelHelper
 
   included do
     scope :page,      ->(page,n){offset(([page.to_i,1].max - 1)*([n.to_i,1].max)).limit([n.to_i,1].max)}
-    scope :order_by,  ->(fields){order(fields.joins(','))} do
+    scope :order_by,  ->(fields){order(fields.join(','))} do
       def reverse
         reverse_order
       end
