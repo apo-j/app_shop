@@ -12,9 +12,46 @@
     <nav class="collapse navbar-collapse ">
       <ul id="navbar" class="nav navbar-nav"  data-bind="foreach:navBar">
         <li>
-          <a href="javascript:void(0)" data-bind="text:$data.code, attr:{href:target}"></a>
+          <a href="javascript:void(0)" data-bind="text:obj.code"></a>
+          <ul class="hide sub-menu non-style" data-bind="foreach:children">
+            <li>
+              <ul class="sub-menu-item non-style">
+                <li class="navbar-item-title" data-bind="text:title"></li>
+                <li class="navbar-item-title" data-bind="text:sub_title"></li>
+                <li><img class="navbar-item-title" data-bind="attr:{src:image_url}"/></li>
+                <ul class="non-style" data-bind="splitList:{data:description, seperator:'|'}">
+
+                </ul>
+                <li><a data-bind="link:info_product"></a></li>
+                <li><a data-bind="link:price"></a></li>
+              </ul>
+            </li>
+          </ul>
         </li>
       </ul>
     </nav>
   </div>
 </header>
+
+<% content_for :js do %>
+<script type="text/javascript">
+    $(function(){
+        $('#navbar>li>a')
+                .mouseover(function(){
+           $(this).next().removeClass('hide');
+           $(this).next().addClass('show');
+        });
+        /*$('#navbar>li').mouseout(function(){
+            $(this).children('.sub-menu').removeClass('show');
+            $(this).children('.sub-menu').addClass('hide');
+        });*/
+        $('body').click(function(event){
+           if($(event.target).parents('sub-menu').length == 0){
+               $('.sub-menu').removeClass('show');
+               $('.sub-menu').addClass('hide');
+           }
+        });
+    })
+</script>
+
+<% end %>

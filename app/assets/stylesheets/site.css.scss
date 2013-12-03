@@ -5,6 +5,25 @@
   margin-top: 50px;
 }
 
+ul.non-style{
+  list-style-type:none;
+}
+
+#navbar{
+  position:relative;
+  .sub-menu{
+    position:absolute;
+    width:800px;
+    padding-left:0;
+    >li{
+      width:250px;
+      height:auto;
+      float:left;
+      border: 1px solid #000;
+    }
+  }
+}
+
 
 
 

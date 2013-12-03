@@ -32,8 +32,9 @@ module FieldValue      #meta_data_field conf
     RADIO = 9
     CSS = 10
     HTML = 11
-    COMPOSITE = 12
-    OTHER = 13
+    URL = 12
+    COMPOSITE = 13
+    OTHER = 14
   end
 
   def self.is_can_be_indexed(field)

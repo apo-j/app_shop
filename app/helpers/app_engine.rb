@@ -91,12 +91,13 @@ module APPEngine
             raise SYS::FieldNotValid, 'field is not existed'
           when NORMAL
             sql = generate_sql
-            c = (options[:ids].nil?)? AppData.select_data(sql) : AppData.select_data(sql).by_group_of_id(options[:ids])
+            c = AppData.select_data(sql).by_obj_id(@obj.obj_id)
             if options[:size].to_i == 0
-              return (options[:reversed])? c.order_by(options[:order_by]).reverse : c.order_by(options[:order_by])
+              c = (options[:reversed])? c.order_by(options[:order_by]).reverse : c.order_by(options[:order_by])
             else
-              return (options[:reversed])? c.page(options[:page],options[:size]).order_by(options[:order_by]).reverse : c.page(options[:page],options[:size]).order_by(options[:order_by])
+              c = (options[:reversed])? c.page(options[:page],options[:size]).order_by(options[:order_by]).reverse : c.page(options[:page],options[:size]).order_by(options[:order_by])
             end
+            return (options[:ids].nil?)? c : c.by_group_of_id(options[:ids])
         end
       end
 
