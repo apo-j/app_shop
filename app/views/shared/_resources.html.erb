@@ -9,7 +9,7 @@
     <%= yield :rightSideBar_content %>
   </div>
   <div id="page-navbar-data"> <!-- TODO : add title to nav bar -->
-    <%= yield :navbar_content %>
+    <%= get_navbar_by_org_obj org_id:1, obj_name:'navbar' %>
   </div>
   <div id="translations">
 

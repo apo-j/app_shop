@@ -1,7 +1,7 @@
 module APPEngine
   module DataSearch
 
-    def search_app_data_by_obj_name(org=Org::SYS, obj_name, page = 1, size = SYS::DEFAULT_SIZE, order_by = [%w(guid)], reversed = false)
+    def search_app_data_by_obj_name(org = Org::SYS, obj_name, page = 1, size = SYS::DEFAULT_SIZE, order_by = [%w(guid)], reversed = false)
       options[:org] = org
       options[:obj_name] = obj_name
       options[:page] = page
