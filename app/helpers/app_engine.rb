@@ -1,10 +1,11 @@
 module APPEngine
   module DataSearch
 
-    def search_app_data_by_obj_name(obj_name, org = Org::SYS, size = nil, page = nil, order_by = nil, reversed = false)
+    def search_app_data_by_obj_name(obj_name, org = Org::SYS, ids = nil, size = nil, page = nil, order_by = nil, reversed = false)
       options={}
       options[:org] = org
       options[:obj_name] = obj_name
+      options[:ids] = ids
       options[:page] = page || 1
       options[:size] = size || SYS::DEFAULT_SIZE
       options[:order_by] = order_by || %w(guid)
@@ -12,10 +13,11 @@ module APPEngine
       return search_app_data_by_obj(options)
     end
 
-    def search_app_data_by_obj_id(obj_id, org = Org::SYS, size = nil, page = nil, order_by = nil, reversed = false)
+    def search_app_data_by_obj_id(obj_id, org = Org::SYS, ids = nil, size = nil, page = nil, order_by = nil, reversed = false)
       options={}
       options[:org] = org
       options[:obj_id] = obj_id
+      options[:ids] = ids
       options[:page] = page || 1
       options[:size] = size || SYS::DEFAULT_SIZE
       options[:order_by] = order_by || %w(guid)
@@ -74,10 +76,11 @@ module APPEngine
             raise SYS::FieldNotValid, 'field is not existed'
           when NORMAL
             sql = generate_sql
+            c = (options[:ids].nil?)? AppData.select_data(sql) : AppData.select_data(sql).by_group_of_id(options[:ids])
             if options[:size].to_i == 0
-              return (options[:reversed])? AppData.select_data(sql).order_by(options[:order_by]).reverse : AppData.select_data(sql).order_by(options[:order_by])
+              return (options[:reversed])? c.order_by(options[:order_by]).reverse : c.order_by(options[:order_by])
             else
-              return (options[:reversed])? AppData.select_data(sql).page(options[:page],options[:size]).order_by(options[:order_by]).reverse : AppData.select_data(sql).page(options[:page],options[:size]).order_by(options[:order_by])
+              return (options[:reversed])? c.page(options[:page],options[:size]).order_by(options[:order_by]).reverse : c.page(options[:page],options[:size]).order_by(options[:order_by])
             end
         end
       end
