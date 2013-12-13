@@ -4,6 +4,8 @@ AppShop::Application.routes.draw do
   root 'home#index'
   match "home", to: 'home#index', via: 'get'
   match "price/:id", to: 'price#index', via: 'get'
+  match "calculate-price", to:'ajax#calculate_price', via: 'post'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
