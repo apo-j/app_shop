@@ -47,7 +47,7 @@ module APPEngine
       NORMAL = 3
 
       def generate_sql
-        sql = 'guid, obj_id as obj'
+        sql = 'guid, obj_id'
         @fields.each do |field|
           sql << ',v'
           sql << field.num.to_s
