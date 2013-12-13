@@ -7,18 +7,36 @@
 f1:
   obj: one
   org_id: 100
-  field_name: field1
+  field_name: first_name
   field_num: 1
   field_type: 1
   is_indexed: true
-  is_unique: true
+  is_unique: false
 # column: value
 f2:
   obj: one
   org_id: 100
-  field_name: field2
+  field_name: last_name
   field_num: 2
   field_type: 1
   is_indexed: true
-  is_unique: true
+  is_unique: false
 #  column: value
+
+f3:
+  obj: two
+  org_id: 100
+  field_name: address
+  field_num: 1
+  field_type: 1
+  is_indexed: true
+  is_unique: false
+
+f4:
+  obj: three
+  org_id: 100
+  field_name: name
+  field_num: 1
+  field_type: 1
+  is_indexed: true
+  is_unique: false

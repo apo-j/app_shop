@@ -30,7 +30,8 @@ class MetaDataTest < ActiveSupport::TestCase
 
   test "find obj by name" do
     assert MetaData.active.by_name(meta_data(:one).org_id, meta_data(:one).obj_name).any?
-    assert MetaData.active.by_name(meta_data(:two).org_id, meta_data(:two).obj_name).empty?
+    assert MetaData.active.by_name(meta_data(:two).org_id, meta_data(:two).obj_name).any?
+    assert MetaData.by_name(meta_data(:three).org_id, meta_data(:three).obj_name).any?
   end
 
   test "find obj by id" do

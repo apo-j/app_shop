@@ -20,4 +20,20 @@ class MetaDataFieldTest < ActiveSupport::TestCase
     assert_not_nil obj
   end
 
+  test "not null" do
+    field = MetaDataField.new
+    errs = MetaDataField.get_errors(field)
+    assert errs.any?
+    assert errs[:org_id].any?
+    assert errs[:field_name].any?
+    assert errs[:field_num].any?
+    assert errs[:field_type].any?
+    assert errs[:is_indexed].any?
+    assert errs[:is_unique].any?
+  end
+
+  test "unique" do
+
+  end
+
 end

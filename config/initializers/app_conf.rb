@@ -34,8 +34,7 @@ module FieldValue      #meta_data_field conf
     CSS = 11
     HTML = 12
     URL = 13
-    COMPOSITE = 14
-    OTHER = 15
+    OTHER = 14
   end
 
   def self.is_can_be_indexed(field)
@@ -60,7 +59,7 @@ module FieldValue      #meta_data_field conf
 
   def self.field_value_convert(type, value)
     case type
-      when Type::STRING, Type::PLAIN_TEXT..Type::IMAGE,Type::CSS..Type::COMPOSITE
+      when Type::STRING, Type::PLAIN_TEXT..Type::IMAGE,Type::CSS..Type::URL
         return value.to_s
       when Type::INT
         return Integer(value)
