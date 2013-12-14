@@ -2,7 +2,7 @@ module MetaDataFieldValidations
   extend ActiveSupport::Concern
 
   included do
-    validates :org_id, :field_name, :field_type, :field_num, :is_indexed, presence: {message: ErrorMSG::Model::MSG[:p]}
+    validates :org_id, :field_name, :field_type, :field_num, :is_indexed, :is_unique, presence: {message: ErrorMSG::Model::MSG[:p]}
     validates :field_name, uniqueness: {scope: :obj, message: ErrorMSG::Model::MSG[:uq]}
     validates :field_num, uniqueness: {scope: :obj, message: ErrorMSG::Model::MSG[:uq]}
     validates :field_name, length: {in:3..100}, presence: {message: ErrorMSG::Model::MSG[:len]}

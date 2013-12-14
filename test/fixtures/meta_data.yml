@@ -6,10 +6,15 @@
 #
 one:
   org_id: 100
-  obj_name: test_1
+  obj_name: person
   is_active: true
 
 two:
    org_id: 100
-   obj_name: test_2
+   obj_name: contact
+   is_active: true
+
+three:
+   org_id: 100
+   obj_name: invoice
    is_active: false
