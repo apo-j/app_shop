@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131205230214) do
+ActiveRecord::Schema.define(version: 20131222194938) do
 
   create_table "app_data", primary_key: "guid", force: true do |t|
     t.integer  "obj_id"
@@ -231,7 +231,6 @@ ActiveRecord::Schema.define(version: 20131205230214) do
     t.integer  "org_id"
     t.integer  "obj_id"
     t.string   "field_name"
-    t.string   "field_type"
     t.integer  "field_num"
     t.integer  "idx_int"
     t.string   "idx_string"
@@ -239,6 +238,7 @@ ActiveRecord::Schema.define(version: 20131205230214) do
     t.integer  "lock_version"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "field_type"
   end
 
   add_index "index_values", ["instance_id"], name: "fk_index_data", using: :btree
@@ -267,9 +267,9 @@ ActiveRecord::Schema.define(version: 20131205230214) do
     t.integer  "lock_version"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "field_type"
     t.boolean  "is_unique",    default: false, null: false
     t.boolean  "is_indexed",   default: false, null: false
+    t.integer  "field_type"
   end
 
   add_index "meta_data_fields", ["obj_id", "field_name"], name: "by_obj_field", unique: true, using: :btree
