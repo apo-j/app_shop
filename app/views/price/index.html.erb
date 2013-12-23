@@ -1,0 +1,167 @@
+<% provide(:title,'Configurateur') %>
+<div data-bind="stopBindings">
+  <div id="configurator">
+    <div class="panel-group" id="accordion">
+      <div class="panel panel-default" data-bind="with:data.matiere">  <!-- Matiere -->
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#matiere">
+              Matière
+            </a>
+          </h4>
+        </div>
+        <div class="panel-collapse collapse in"  id="matiere">
+              <div class="panel-body" data-bind="foreach:$data">
+                <label>
+                  <input type="radio" name="matiere" data-bind="checked: $root.results.matiere, value:guid">
+                  <span data-bind="text:title"></span>
+                </label><br>
+              </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default" data-bind="with:data.coloris">  <!-- Coloris -->
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#coloris">
+              Coloris
+            </a>
+          </h4>
+        </div>
+        <div class="panel-collapse collapse"  id="coloris">
+          <div class="panel-body" data-bind="foreach:$root.data.coloris.filterByProperty('type_group', '0')">
+            <label>
+              <input type="radio" name="coloris" data-bind="checked: $root.results.coloris, value:guid">
+              <img class="bordered black" data-bind="attr:{src:image_url,width:47, height:47}"/>
+              <span data-bind="text:title"></span>
+            </label><br>
+          </div>
+          <div class="panel-body" data-bind="foreach:$root.data.coloris.filterByProperty('type_group', '1')">
+            <label>
+              <input type="radio" name="coloris" data-bind="checked: $root.results.coloris, value:guid">
+              <img class="bordered black" data-bind="attr:{src:image_url,width:47, height:47}"/>
+              <span data-bind="text:title"></span>
+            </label><br>
+          </div>
+          <div class="panel-body" data-bind="foreach:$root.data.coloris.filterByProperty('type_group', '2')">
+            <label>
+              <input type="radio" name="coloris_side" data-bind="checked: $root.results.coloris_side, value:guid">
+              <span data-bind="text:title"></span>
+            </label><br>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default" data-bind="with:data.type">  <!-- Type -->
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#type">
+              Type
+            </a>
+          </h4>
+        </div>
+        <div class="panel-collapse collapse"  id="type">
+          <div class="panel-body" data-bind="foreach:$root.data.type.filterByProperty('type_group', '0')">
+            <label>
+              <input type="radio" name="type" data-bind="checked: $root.results.type, value:guid">
+              <img class="bordered black" data-bind="attr:{src:image_url,width:47, height:47}"/>
+              <span data-bind="text:title"></span>
+            </label><br>
+          </div>
+          <div class="panel-body" data-bind="foreach:$root.data.type.filterByProperty('type_group', '1')">
+            <label>
+              <input type="radio" name="type" data-bind="checked: $root.results.type, value:guid">
+              <img class="bordered black" data-bind="attr:{src:image_url,width:47, height:47}"/>
+              <span data-bind="text:title"></span>
+            </label><br>
+          </div>
+          <div class="panel-body" data-bind="foreach:$root.data.type.filterByProperty('type_group', '2')">
+            <label>
+              <input type="radio" name="type" data-bind="checked: $root.results.type, value:guid">
+              <img class="bordered black" data-bind="attr:{src:image_url,width:47, height:47}"/>
+              <span data-bind="text:title"></span>
+            </label><br>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#dimension">
+                Dimension
+            </a>
+          </h4>
+        </div>
+        <div class="panel-collapse collapse" id="dimension">
+            <label>Largeur totale en mm: <input type="text" class="form-control" data-bind="value: $root.data.dimension.width.value">
+            <span data-bind="text:$root.data.dimension.width.range.left"></span> - <span data-bind="text:$root.data.dimension.width.range.right"></span>
+            </label>
+            <label>Hauteur totale en mm: <input type="text" class="form-control" data-bind="value: $root.data.dimension.height.value">
+              <span data-bind="text:$root.data.dimension.height.range.left"></span> - <span data-bind="text:$root.data.dimension.height.range.right"></span>
+            </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="well" id="total-price">
+      Total : <span data-bind="textAsCurrency: total"></span>
+    </div>
+  </div>
+</div>
+
+
+
+<% content_for :body_content do %>
+    <%= @response.to_json  %>
+<% end %>
+
+<% content_for :js do %>
+    <script>
+      var configurationResultItem = function(code, value){
+          var self = this;
+          self.code = code;
+          self.value = value;
+      }
+
+      var rawData = JSON.parse(String.removeChangeLine($('#' + static.pageContentId).text()));
+
+      var localVM = function(){
+          var self = this;
+
+          self.data = ko.mapping.fromJS(rawData.data);
+          self.total = ko.observable(0);
+
+          self.changeTracker = new ko.dirtyFlag(self.data, false);
+
+          self.results = {
+            matiere: ko.observable(),
+            coloris: ko.observable(),
+            coloris_side: ko.observable(),
+            type:ko.observable(),
+            width:self.data.dimension.width.value,
+            height: self.data.dimension.height.value
+          };
+
+          ko.computed(function(){
+              console.log('dd');
+              if(self.changeTracker.isDirty()){
+                  if(self.results.matiere() && self.results.coloris() && self.results.coloris_side() && self.results.type() && self.results.width() > 0 && self.results.height() > 0){
+                      utilities.post(
+                              "/calculate-price",
+                              {data: ko.mapping.toJS(self.results)},
+                              function(data){
+                                  self.total(data.data);
+                                  self.changeTracker.reset();
+                              },
+                              function(){alert('KO')});
+                  }
+              }
+          });
+      }
+
+
+      var vm =  new localVM();
+      ko.applyBindings(vm, document.getElementById('configurator'));
+    </script>
+<% end %>
