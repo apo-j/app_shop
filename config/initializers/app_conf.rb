@@ -70,6 +70,18 @@ module FieldValue      #meta_data_field conf
     end
   end
 
+  def self.field_type_convert(type)
+    case type
+      when Type::STRING, Type::PLAIN_TEXT..Type::IMAGE,Type::CSS..Type::URL
+        return :string
+      when Type::INT
+        return :int
+      when Type::DOUBLE
+        return :double
+      else
+        return :string
+    end
+  end
 
 end
 

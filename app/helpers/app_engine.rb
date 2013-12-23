@@ -40,6 +40,14 @@ module APPEngine
       return r
     end
 
+    def search_app_data_by_index(obj_id, org = Org::SYS, conditions = [])
+      options={}
+      options[:org] = org
+      options[:obj_id] = obj_id
+      options[:conditions] = conditions
+      return search_app_data_by_obj(options)
+    end
+
     private
       ARGUMENT_ERROR = 0
       OBJ_NOT_FOUND = 1
@@ -76,6 +84,20 @@ module APPEngine
 
         if (@fields = MetaDataField.all_fields.by_id(@obj.obj_id)).empty?
           return FIELD_NOT_FOUND
+        end
+
+        if !options[:conditions].nil?
+          return ARGUMENT_ERROR if options[:conditions].empty?
+          options[:conditions].each do |condition|
+            @fields.each do |field|
+              condition[:type] = FieldValue.field_type_convert(field.field_type) if field.field_name == condition[:name]
+            end
+          end
+          ids = IndexValue.select_value.by_conditions(options[:conditions]).by_org_obj(options[:org], options[options[:obj_id]])
+          unless ids.empty?
+            options[:ids] = []
+            ids.each {options[:ids]<<ids.instance_id}
+          end
         end
 
         return NORMAL
