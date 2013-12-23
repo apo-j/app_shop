@@ -45,6 +45,9 @@ module APPEngine
       options[:org] = org
       options[:obj_id] = obj_id
       options[:conditions] = conditions
+      options[:size] = 0
+      options[:order_by] = %w(guid)
+      options[:reversed] = false
       return search_app_data_by_obj(options)
     end
 
@@ -53,7 +56,7 @@ module APPEngine
       OBJ_NOT_FOUND = 1
       FIELD_NOT_FOUND = 2
       NORMAL = 3
-
+      NO_RESULT = 4
       def generate_sql
         sql = 'guid, obj_id'
         @fields.each do |field|
@@ -90,13 +93,15 @@ module APPEngine
           return ARGUMENT_ERROR if options[:conditions].empty?
           options[:conditions].each do |condition|
             @fields.each do |field|
-              condition[:type] = FieldValue.field_type_convert(field.field_type) if field.field_name == condition[:name]
+              condition[:type] = FieldValue.field_type_convert(field.type) if field.name == condition[:name]
             end
           end
-          ids = IndexValue.select_value.by_conditions(options[:conditions]).by_org_obj(options[:org], options[options[:obj_id]])
+          ids = IndexValue.select_value.by_conditions(options[:conditions]).by_org_obj(options[:org], options[:obj_id])
           unless ids.empty?
             options[:ids] = []
-            ids.each {options[:ids]<<ids.instance_id}
+            ids.each {|id|options[:ids]<<id.instance_id}
+          else
+            return NO_RESULT
           end
         end
 
@@ -111,6 +116,8 @@ module APPEngine
             raise SYS::ObjNotValid, 'obj is not existed'
           when FIELD_NOT_FOUND
             raise SYS::FieldNotValid, 'field is not existed'
+          when NO_RESULT
+            return []
           when NORMAL
             sql = generate_sql
             c = AppData.select_data(sql).by_obj_id(@obj.obj_id)

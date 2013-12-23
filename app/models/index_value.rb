@@ -1,5 +1,5 @@
 class IndexValue < ActiveRecord::Base
   include IndexValueAssociation
   include IndexValueQuery
-  include ModelHelper
+  include Share::ModelHelper
 end
