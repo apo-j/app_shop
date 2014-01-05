@@ -118,12 +118,6 @@
 
 <% content_for :js do %>
     <script>
-      var configurationResultItem = function(code, value){
-          var self = this;
-          self.code = code;
-          self.value = value;
-      }
-
       var rawData = JSON.parse(String.removeChangeLine($('#' + static.pageContentId).text()));
 
       var localVM = function(){
