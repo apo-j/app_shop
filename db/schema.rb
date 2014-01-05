@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131222194938) do
+ActiveRecord::Schema.define(version: 20140105203641) do
 
   create_table "app_data", primary_key: "guid", force: true do |t|
     t.integer  "obj_id"
@@ -317,5 +317,20 @@ ActiveRecord::Schema.define(version: 20131222194938) do
   end
 
   add_index "unique_fields", ["org_id", "obj_id", "field_name"], name: "by_org_obj_field", unique: true, using: :btree
+
+  create_table "work_flow", primary_key: "flow_id", force: true do |t|
+    t.integer  "org_id"
+    t.string   "state"
+    t.integer  "instance_id"
+    t.integer  "identity"
+    t.integer  "lock_version"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "work_flow", ["org_id", "instance_id", "identity"], name: "by_org_instance_identity", using: :btree
+  add_index "work_flow", ["org_id", "state", "identity"], name: "by_org_state_identity", using: :btree
+  add_index "work_flow", ["org_id", "state"], name: "by_org_state", using: :btree
+  add_index "work_flow", ["state"], name: "by_state", using: :btree
 
 end
