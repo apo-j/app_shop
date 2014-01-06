@@ -3,6 +3,7 @@ class AjaxController < ApplicationController
 
 
   def calculate_price
+=begin
     matiere = params[:data][:matiere]
     col1 =  params[:data][:coloris].to_i
     col2 =  params[:data][:coloris_side].to_i
@@ -36,6 +37,18 @@ class AjaxController < ApplicationController
     res = datas[(j * widths.length) + i] if i != -1 && j != -1
 
     return render :json => {data: res || 0}
+=end
+    matiere = params[:matiere]
+    type =  params[:type]
+
+    matrix_price = search_app_data_by_index(1007, 100, [{name: 'matiere', value: matiere,op: '='},{name: 'type', value: type,op: '='}])
+
+    res = {}
+    res[:widths] =  matrix_price[0][:axe_w]
+    res[:heights] =  matrix_price[0][:axe_h]
+    res[:options] =  matrix_price[0][:options]
+    res[:data] =  matrix_price[0][:data]
+    return render :json => res
   end
 
 
