@@ -95,10 +95,10 @@
         </div>
         <div class="panel-collapse collapse" id="dimension">
             <label>Largeur totale en mm: <input type="text" class="form-control" data-bind="value: $root.data.dimension.width.value">
-            <span data-bind="text:$root.data.dimension.width.range.left"></span> - <span data-bind="text:$root.data.dimension.width.range.right"></span>
+            <span data-bind="text:$root.range.width.left"></span> - <span data-bind="text:$root.range.width.right"></span>
             </label>
             <label>Hauteur totale en mm: <input type="text" class="form-control" data-bind="value: $root.data.dimension.height.value">
-              <span data-bind="text:$root.data.dimension.height.range.left"></span> - <span data-bind="text:$root.data.dimension.height.range.right"></span>
+              <span data-bind="text:$root.range.height.left"></span> - <span data-bind="text:$root.range.height.right"></span>
             </label>
         </div>
       </div>
@@ -118,21 +118,32 @@
 
 <% content_for :js do %>
     <script>
-      var configurationResultItem = function(code, value){
-          var self = this;
-          self.code = code;
-          self.value = value;
-      }
-
       var rawData = JSON.parse(String.removeChangeLine($('#' + static.pageContentId).text()));
+
+      var priceData = function(data, widths, heights){
+        var self = this;
+        self.data = data || [];
+        self.widths = widths || [];
+        self.heights = heights || [];
+      };
 
       var localVM = function(){
           var self = this;
 
           self.data = ko.mapping.fromJS(rawData.data);
           self.total = ko.observable(0);
-
-          self.changeTracker = new ko.dirtyFlag(self.data, false);
+          self.priceData = new priceData();
+          self.range = {
+              width:{
+                  left:ko.observable(0),
+                  right:ko.observable(0)
+              },
+              height:{
+                  left:ko.observable(0),
+                  right:ko.observable(0)
+              }
+          }
+          //self.changeTracker = new ko.dirtyFlag(self.data, false);
 
           self.results = {
             matiere: ko.observable(),
@@ -144,6 +155,35 @@
           };
 
           ko.computed(function(){
+              if(self.results.matiere() && self.results.type()){
+                  utilities.post(
+                          "/calculate-price",
+                          {matiere: self.results.matiere(), type: self.results.type()},
+                          function(data){
+                              self.priceData = new priceData(utilities.splitStringToArray(data.data), utilities.splitStringToArray(data.widths),utilities.splitStringToArray(data.heights));
+                              utilities.arrayRange(self.priceData.widths, self.range.width);
+                              utilities.arrayRange(self.priceData.heights, self.range.height);
+                              console.log('ajax');
+                          },
+                          function(){alert('KO')});
+              }
+          });
+
+          ko.computed(function(){
+                    if(self.results.matiere() && self.results.coloris() && self.results.coloris_side() && self.results.type() && self.results.width() > 0 && self.results.height() > 0){
+                        console.log('dd');
+                        var i = utilities.b_search(self.priceData.widths, self.results.width());
+                        var j = utilities.b_search(self.priceData.heights, self.results.height());
+                        if(i != -1 && j != -1){
+                            self.total(self.priceData.data[(j * self.priceData.widths.length) + i]);
+                        }else{
+                            self.total(0);
+                        }
+                    }
+
+           });
+
+     /*     ko.computed(function(){
               console.log('dd');
               if(self.changeTracker.isDirty()){
                   if(self.results.matiere() && self.results.coloris() && self.results.coloris_side() && self.results.type() && self.results.width() > 0 && self.results.height() > 0){
@@ -157,11 +197,12 @@
                               function(){alert('KO')});
                   }
               }
-          });
+          });*/
       }
 
 
       var vm =  new localVM();
       ko.applyBindings(vm, document.getElementById('configurator'));
+
     </script>
 <% end %>
